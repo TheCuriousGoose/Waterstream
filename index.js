@@ -62,7 +62,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
           return;
         }else{
           const t = new Date();
-          var time = t.toLocaleString('fr-CA', { timeZone: 'America/New_York'});
+          var time = t.toLocaleString('fr-CA', { timeZone: 'America/Los_Angeles'});
   
           let twitchname = activity.url.replace('https://www.twitch.tv/','');
   
@@ -127,6 +127,7 @@ client.on("message", message => {
 
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
+  client.user.setActivity(`Just doing my work =D`);
 });
 
 client.login(config.token);
