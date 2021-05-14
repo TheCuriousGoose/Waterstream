@@ -105,7 +105,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
             setTimeout(() => {
               // Removes the user from the set after 2 hours
               recentStreamNotification.delete(newPresence.member.id);
-            }, 7200*1000);
+            }, 43200*1000);
           }
         }
       }
