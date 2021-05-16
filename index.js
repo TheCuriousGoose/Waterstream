@@ -8,8 +8,8 @@ const fs = require("fs");
 const client = new Discord.Client();
 const config = require("./config.json");
 
-//creating the array for live streamers
-const streamers = new Set();
+//stream notification stuff
+var hours = 2;
 const recentStreamNotification = new Set();
 
 //assings config to client
@@ -92,7 +92,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
             setTimeout(() => {
               // Removes the user from the set after 2 hours
               recentStreamNotification.delete(newPresence.member.id);
-            }, 7200*1000);
+            }, hours*60*60*1000);
           }else{
             //gets needed channel
             const channel = client.channels.cache.get(config.stream.channel)
@@ -105,7 +105,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
             setTimeout(() => {
               // Removes the user from the set after 2 hours
               recentStreamNotification.delete(newPresence.member.id);
-            }, 43200*1000);
+            }, hours*60*60*1000);
           }
         }
       }
