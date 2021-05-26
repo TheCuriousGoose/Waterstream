@@ -19,7 +19,7 @@ exports.run = (client, message, args) => {
         }else if(args[0] === 'supported'){
             message.channel.send('There are a total of ' + langsshort.length + ' supported languages. Here are they: `' + langsshort + '`')
         }else{
-            message.channel.send('Please use `' + client.config.prefix + 'translate <language to translate to | supported> <text for translation>`')
+            message.channel.send('Please use `' + client.config.prefix + 'translate <language to translate to or type supported to see all the supported languages> <text for translation>`')
         }
     }
     
