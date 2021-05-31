@@ -15,6 +15,7 @@ const recentStreamNotification = new Set();
 //assings config to client
 client.config = config;
 
+//Getting the command handeler
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
@@ -27,6 +28,7 @@ fs.readdir("./events/", (err, files) => {
 client.commands = new Enmap();
 client.extra = new Enmap();
 
+//Getting all the commands
 fs.readdir("./commands/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
@@ -39,6 +41,7 @@ fs.readdir("./commands/", (err, files) => {
   console.log(`Done loading in ${files.length} commands... loading in extra features...`);
 });
 
+//Getting all the extra features
 fs.readdir("./extra/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
@@ -50,12 +53,13 @@ fs.readdir("./extra/", (err, files) => {
   });
   console.log(`Done loading ${files.length} extra features`)
 });
+
+//Handels the Stream message for pachu and people with the Upstreamer role
 client.on("presenceUpdate", (oldPresence, newPresence) => {
   if (!newPresence.activities) return false;
 
   if(!newPresence.member.roles.cache.has(config.stream.role)) return false;
   
-
   newPresence.activities.forEach(activity => {
       if (activity.type == "STREAMING") {
         if (recentStreamNotification.has(newPresence.member.id)) {
@@ -94,6 +98,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
               recentStreamNotification.delete(newPresence.member.id);
             }, hours*60*60*1000);
           }else{
+            
             //gets needed channel
             const channel = client.channels.cache.get(config.stream.channel)
             //sends notification in channel
@@ -113,6 +118,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
 });
 
 client.on("message", message => {
+  
   if(message.channel.id === '841728830784012290'){
     const channel = client.channels.cache.get('818694681571098657')
     channel.startTyping();
@@ -120,7 +126,7 @@ client.on("message", message => {
       channel.stopTyping();
     
       channel.send(message.content);
-    }, message.content.length * 150)
+    }, message.content.length * 75)
 
   }
 })
