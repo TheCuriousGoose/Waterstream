@@ -131,6 +131,21 @@ client.on("message", message => {
   }
 })
 
+client.on('guildMemberAdd', member => {
+  if(member.guild.id === '818694681571098654'){
+    if(member.bot) return;
+  
+    const channel = client.channels.cache.get('818694681571098657');
+  
+    var randomjoin = ["has joined the party!","just joined. Everyone, look busy!","we hope you brought pizza.","has spawned in the server.","just arrived. Seems OP - please nerf.", "decided to look what's happening here!",
+    "wants to have some fun!", "made the choose to join this peaceful place","We hope you brought some choccy milk", "  wants to join the vibe"]
+  
+    channel.send(`${member} ${randomjoin[Math.floor(Math.random() * randomjoin.length)]}`);
+  }
+
+
+});
+
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
   client.user.setActivity(`Just doing my work =D`);

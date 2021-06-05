@@ -4,8 +4,6 @@ const { getImage } = require('random-reddit')
 const cooldown = new Set();
 
 exports.run = async(client, message, args) => {
-    if(message.guild.id === '836707588640997456' || message.guild.id === '742732244673626234'){
-        
         if(!message.channel.nsfw) return message.channel.send('This command is not available in this channel')
         if(cooldown.has(message.member.id)) return;
         
@@ -60,7 +58,6 @@ exports.run = async(client, message, args) => {
             }
 
         }
-    }
 }
 
 
