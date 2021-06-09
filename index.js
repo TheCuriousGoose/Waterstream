@@ -12,8 +12,12 @@ const config = require("./config.json");
 var hours = 2;
 const recentStreamNotification = new Set();
 
+//Things for !timer
+let lightstatus = 0;
+
 //assings config to client
 client.config = config;
+client.lightstatus = lightstatus;
 
 //Getting the command handeler
 fs.readdir("./events/", (err, files) => {
@@ -27,6 +31,7 @@ fs.readdir("./events/", (err, files) => {
 
 client.commands = new Enmap();
 client.extra = new Enmap();
+
 
 //Getting all the commands
 fs.readdir("./commands/", (err, files) => {
@@ -129,7 +134,17 @@ client.on("message", message => {
     }, message.content.length * 75)
 
   }
-})
+});
+
+var timer = setInterval(function() {
+  lightstatus++;
+  client.lightstatus = lightstatus;
+  if(lightstatus === 13){
+    clearInterval(timer)
+  }
+}, 1 * 1000)
+
+timer;
 
 client.on('guildMemberAdd', member => {
   if(member.guild.id === '818694681571098654'){

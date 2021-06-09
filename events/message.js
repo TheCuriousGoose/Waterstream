@@ -51,7 +51,6 @@ module.exports = (client, message) => {
         console.log(err)
       }
     }
-    // Run the command
     cmd.run(client, message, args);
   }
 };
