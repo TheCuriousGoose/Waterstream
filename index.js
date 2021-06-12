@@ -100,8 +100,6 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
           .setFooter('GooseDevelopment | Waterstream', 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/water-stream-courtney-crane.jpg');
       
           if(newPresence.member.id === '815419427654074398'){
-            return;
-            
             //gets needed channel
             const channel = client.channels.cache.get(config.stream.pachuchannel)
             //sends notification in channel
