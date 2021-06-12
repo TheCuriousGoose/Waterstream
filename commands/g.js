@@ -1,4 +1,4 @@
-const  googleIt = require('google-it')
+const googleIt = require('google-it')
 const translate = require('@vitalets/google-translate-api');
 const Discord = require("discord.js");
 

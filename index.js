@@ -3,6 +3,7 @@ const { time } = require("console");
 const Discord = require("discord.js");
 const Enmap = require("enmap");
 const fs = require("fs");
+const Twitter = require('twit');
 
 //getting other needed stuff
 const client = new Discord.Client();
@@ -18,6 +19,16 @@ let lightstatus = 0;
 //assings config to client
 client.config = config;
 client.lightstatus = lightstatus;
+
+//twitter setup
+const twitterConf = {
+  consumer_key: config.twitter.TWITTER_CONSUMER_KEY,
+  consumer_secret: config.twitter.TWITTER_CONSUMER_SECRET,
+  access_token: config.twitter.TWITTER_ACCESS_TOKEN_KEY,
+  access_token_secret: config.twitter.TWITTER_ACCESS_TOKEN_SECRET
+}
+const twitterClient = new Twitter(twitterConf);
+const dest = '820012263863615488';
 
 //Getting the command handeler
 fs.readdir("./events/", (err, files) => {
@@ -89,7 +100,9 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
           .setFooter('GooseDevelopment | Waterstream', 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/water-stream-courtney-crane.jpg');
       
           if(newPresence.member.id === '815419427654074398'){
-            //gets needed channel
+            return;
+            
+            /*//gets needed channel
             const channel = client.channels.cache.get(config.stream.pachuchannel)
             //sends notification in channel
             channel.send(notification);
@@ -101,7 +114,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
             setTimeout(() => {
               // Removes the user from the set after 2 hours
               recentStreamNotification.delete(newPresence.member.id);
-            }, hours*60*60*1000);
+            }, hours*60*60*1000);*/
           }else{
             
             //gets needed channel
@@ -121,6 +134,8 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
       }
   });
 });
+
+
 
 client.on("message", message => {
   
@@ -142,9 +157,27 @@ var timer = setInterval(function() {
   if(lightstatus === 13){
     clearInterval(timer)
   }
-}, 1 * 1000)
+}, 5  * 1000)
 
 timer;
+
+//manages incoming tweets and sends them to the twitter channel
+const stream = twitterClient.stream('statuses/filter', {
+  follow: '1353447772394057734',
+});
+
+stream.on('tweet', tweet => {
+  if(tweet.retweeted === true){
+    const twitterMessage = `${tweet.user.name} retweeted: https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`
+    client.channels.cache.get(dest).send(twitterMessage);
+  }else if(tweet.is_quote_status === true){
+    const twitterMessage = `${tweet.user.name} retweeted ${tweet.quoted_status.name} and tweeted: https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`
+    client.channels.cache.get(dest).send(twitterMessage);
+  }else if(tweet.in_reply_to_status_id !== null){
+    return;
+  }
+  return false;
+});
 
 client.on('guildMemberAdd', member => {
   if(member.guild.id === '818694681571098654'){
