@@ -102,7 +102,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
           if(newPresence.member.id === '815419427654074398'){
             return;
             
-            /*//gets needed channel
+            //gets needed channel
             const channel = client.channels.cache.get(config.stream.pachuchannel)
             //sends notification in channel
             channel.send(notification);
@@ -114,7 +114,7 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
             setTimeout(() => {
               // Removes the user from the set after 2 hours
               recentStreamNotification.delete(newPresence.member.id);
-            }, hours*60*60*1000);*/
+            }, 1);
           }else{
             
             //gets needed channel
@@ -175,6 +175,9 @@ stream.on('tweet', tweet => {
     client.channels.cache.get(dest).send(twitterMessage);
   }else if(tweet.in_reply_to_status_id !== null){
     return;
+  }else{
+    const twitterMessage = `${tweet.user.name} tweeted: https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`
+    client.channels.cache.get(dest).send(twitterMessage);
   }
   return false;
 });
