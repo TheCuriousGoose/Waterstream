@@ -133,8 +133,6 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
   });
 });
 
-
-
 client.on("message", message => {
   
   if(message.channel.id === '841728830784012290'){
@@ -174,6 +172,8 @@ stream.on('tweet', tweet => {
   }else if(tweet.in_reply_to_status_id !== null){
     return;
   }else{
+    if(tweet.user.id !== 1353447772394057734) return;
+    
     const twitterMessage = `${tweet.user.name} tweeted: https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`
     client.channels.cache.get(dest).send(twitterMessage);
   }
