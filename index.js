@@ -163,6 +163,7 @@ const stream = twitterClient.stream('statuses/filter', {
 });
 
 stream.on('tweet', tweet => {
+  console.log(tweet);
   if(tweet.retweeted === true){
     const twitterMessage = `${tweet.user.name} retweeted: https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`
     client.channels.cache.get(dest).send(twitterMessage);
