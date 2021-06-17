@@ -9,9 +9,9 @@ exports.run = async(client, message, args) => {
         
         //if(message.member.id === '659690575859154955') return;
         if(args[0]){
-            const image = await getImage(args[0]).catch(e => message.channel.send('Something went wrong.'))
+            const image = await getImage(args[0]).catch(e => {message.channel.send('Something went wrong.'); console.log(e)})
 
-            if(image.includes('https://redgifs.com/')) return message.channel.send(image).catch(e => { return })
+            //if(image.includes('https://redgifs.com/')) return message.channel.send(image).catch(e => { return })
             
             const embed = new Discord.MessageEmbed()
                 .setTitle(`Subreddit: ${args[0]}`)

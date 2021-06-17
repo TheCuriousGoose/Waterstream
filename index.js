@@ -1,9 +1,12 @@
 //Get needed libaries
-const { time } = require("console");
+const colors = require('colors');
 const Discord = require("discord.js");
 const Enmap = require("enmap");
 const fs = require("fs");
 const Twitter = require('twit');
+const url = require('url');
+const querystring = require('querystring');
+
 
 //getting other needed stuff
 const client = new Discord.Client();
@@ -14,11 +17,10 @@ var hours = 2;
 const recentStreamNotification = new Set();
 
 //Things for !timer
-let lightstatus = 0;
+var counter = require('./commandevents/timercounter.js');
 
 //assings config to client
 client.config = config;
-client.lightstatus = lightstatus;
 
 //twitter setup
 const twitterConf = {
@@ -43,7 +45,6 @@ fs.readdir("./events/", (err, files) => {
 client.commands = new Enmap();
 client.extra = new Enmap();
 
-
 //Getting all the commands
 fs.readdir("./commands/", (err, files) => {
   if (err) return console.error(err);
@@ -51,10 +52,10 @@ fs.readdir("./commands/", (err, files) => {
     if (!file.endsWith(".js")) return;
     let props = require(`./commands/${file}`);
     let commandName = file.split(".")[0];
-    console.log(`Attempting to load command ${commandName}`);
+    console.log(colors.gray(`Loading command ${commandName}`));
     client.commands.set(commandName, props);
   });
-  console.log(`Done loading in ${files.length} commands... loading in extra features...`);
+  console.log(colors.green(`Done loading in ${files.length} commands... loading in extra features...`));
 });
 
 //Getting all the extra features
@@ -64,10 +65,10 @@ fs.readdir("./extra/", (err, files) => {
     if (!file.endsWith(".js")) return;
     let props = require(`./extra/${file}`);
     let commandName = file.split(".")[0];
-    console.log(`Attempting to load ${commandName}`);
+    console.log(colors.gray(`Loading ${commandName}`));
     client.extra.set(commandName, props);
   });
-  console.log(`Done loading ${files.length} extra features`)
+  console.log(colors.green(`Done loading ${files.length} extra features`))
 });
 
 //Handels the Stream message for pachu and people with the Upstreamer role
@@ -144,21 +145,24 @@ client.on("message", message => {
       channel.send(message.content);
     }, message.content.length * 75)
 
+  }else if(message.channel.id === ''){
+    const channel = client.channels.cache.get('855025078381969448')
+    channel.send(message.content)
   }
+
 });
 
 var timer = setInterval(function() {
-  lightstatus++;
-  client.lightstatus = lightstatus;
-  if(lightstatus === 13){
+  counter.add();
+  if(counter.count === 13){
     clearInterval(timer)
   }
-}, 5  * 1000)
+}, 20 * 1000)
 
 timer;
 
 //manages incoming tweets and sends them to the twitter channel
-const stream = twitterClient.stream('statuses/filter', {
+/*const stream = twitterClient.stream('statuses/filter', {
   follow: '1353447772394057734',
 });
 
@@ -180,6 +184,9 @@ stream.on('tweet', tweet => {
   }
   return false;
 });
+*/
+
+
 
 client.on('guildMemberAdd', member => {
   if(member.guild.id === '818694681571098654'){
