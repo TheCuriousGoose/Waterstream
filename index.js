@@ -7,7 +7,6 @@ const Twitter = require('twit');
 const url = require('url');
 const querystring = require('querystring');
 
-
 //getting other needed stuff
 const client = new Discord.Client();
 const config = require("./config.json");
