@@ -11,7 +11,7 @@ exports.run = (client, message, args) => {
 
     const filter = (reaction, user) => {
         return ['🔲'].includes(reaction.emoji.name) && user.id === message.author.id;
-    };
+    };      
 
     message.channel.send(`${light[counter.count]} \n${colours}`)
     .then(msg => {
@@ -19,7 +19,6 @@ exports.run = (client, message, args) => {
         msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
         .then(collected => {
             const reaction = collected.first();
-    
             if (reaction.emoji.name === '🔲') {
                 if(counter.count === 0){
                     //brown
@@ -27,9 +26,12 @@ exports.run = (client, message, args) => {
                 }else if(counter.count >= 1 && counter.count <= 3){
                     //purple
                     message.channel.send("You got purple!");
+                    if (!message.author.roles.cache.has(roleIDs.purple)){
+                        message.author.roles.add(roleIDs.purple)
+                    } 
                     for(let i = 0; i < counter.count; i++){
                         setTimeout(() =>{
-                            counter.remove
+                            counter.remove();
                             msg.edit(`${light[counter.count]} \n${colours}`)
                         }, 500)
                     }
@@ -37,6 +39,9 @@ exports.run = (client, message, args) => {
                 }else if(counter.count >= 4 && counter.count <= 5){
                     //blue
                     message.channel.send("You got blue!");
+                    if (!message.author.roles.cache.has(roleIDs.blue)){
+                        message.author.roles.add(roleIDs.bl)
+                    } 
                     for(let i = 0; i < counter.count; i++){
                         setTimeout(() =>{
                             counter.remove();

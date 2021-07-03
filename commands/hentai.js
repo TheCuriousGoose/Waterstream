@@ -9,7 +9,7 @@ exports.run = async(client, message, args) => {
         
         //if(message.member.id === '659690575859154955') return;
         if(args[0]){
-            const image = await getImage(args[0]).catch(e => {message.channel.send('Something went wrong.'); console.log(e)})
+            const image = await getImage(args[0]).catch(e => {message.channel.send('Something went wrong.'); console.log(e); return;})
 
             //if(image.includes('https://redgifs.com/')) return message.channel.send(image).catch(e => { return })
             
@@ -31,13 +31,13 @@ exports.run = async(client, message, args) => {
 
 
         }else{
-            var subslist = ['hentai','animeMILFS','hentaimini','loveiswarhentai','monstergirl']
+            var subslist = ['hentai','animeMILFS','hentaimini','loveiswarhentai','monstergirl','hentaiboobs','yuri','paizuri','masturbationhentai','thick_hentai','swimsuithentai']
             var subreddits = subslist[Math.floor(Math.random() * subslist.length)];
             
-            const image = await getImage(subreddits).catch(e => {message.channel.send('Something went wrong.'); console.log(subreddits)})
+            const image = await getImage(subreddits).catch(e => {message.channel.send('Something went wrong. Please message goose.'); console.log(subreddits); return;})
             
-            if(image.includes('https://redgifs.com/')) return message.channel.send(image).catch(e => { return })
-            if(subreddits === 'hentai_gif') return message.channel.send(image).catch(e => { return })
+            if(image === null) return;
+			if(image.includes('https://redgifs.com/')) return message.channel.send(image).catch(e => { return })
             
             const embed = new Discord.MessageEmbed()
                 .setTitle(`Subreddit: ${subreddits}`)

@@ -147,6 +147,9 @@ client.on("message", message => {
   }else if(message.channel.id === ''){
     const channel = client.channels.cache.get('855025078381969448')
     channel.send(message.content)
+  }else if(message.channel.id === '836707589215223820'){
+    //message.react('🏳️‍🌈')
+	return;
   }
 
 });
