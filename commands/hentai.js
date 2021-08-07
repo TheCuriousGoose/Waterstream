@@ -5,11 +5,12 @@ const cooldown = new Set();
 
 exports.run = async(client, message, args) => {
         if(!message.channel.nsfw) return message.channel.send('This command is not available in this channel')
+        if(message.channel.id === '845823443584417802') return;
         if(cooldown.has(message.member.id)) return;
         
         //if(message.member.id === '659690575859154955') return;
         if(args[0]){
-            const image = await getImage(args[0]).catch(e => {message.channel.send('Something went wrong.'); console.log(e); return;})
+            const image = await getImage(args[0]).catch(e => {message.channel.send('Something went wrong.Please message goose'); console.log(e); return;})
 
             //if(image.includes('https://redgifs.com/')) return message.channel.send(image).catch(e => { return })
             
@@ -31,7 +32,7 @@ exports.run = async(client, message, args) => {
 
 
         }else{
-            var subslist = ['hentai','animeMILFS','hentaimini','loveiswarhentai','monstergirl','hentaiboobs','yuri','paizuri','masturbationhentai','thick_hentai','swimsuithentai']
+            var subslist = ['hentai','animeMILFS','hentaimini','loveiswarhentai','monstergirl','hentaiboobs','yuri','paizuri','masturbationhentai','thick_hentai','swimsuithentai','ecchi']
             var subreddits = subslist[Math.floor(Math.random() * subslist.length)];
             
             const image = await getImage(subreddits).catch(e => {message.channel.send('Something went wrong. Please message goose.'); console.log(subreddits); return;})

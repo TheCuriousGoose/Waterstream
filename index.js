@@ -14,12 +14,16 @@ const config = require("./config.json");
 //stream notification stuff
 var hours = 2;
 const recentStreamNotification = new Set();
+ 
 
 //Things for !timer
 var counter = require('./commandevents/timercounter.js');
 
 //assings config to client
 client.config = config;
+
+//creating streamdata set
+
 
 //twitter setup
 const twitterConf = {
@@ -122,6 +126,8 @@ client.on("presenceUpdate", (oldPresence, newPresence) => {
             //adds role
             //add userid to recentstreamnotification
             recentStreamNotification.add(newPresence.member.id);
+            
+            
             //sets timeout
             setTimeout(() => {
               // Removes the user from the set after 2 hours
@@ -200,6 +206,12 @@ client.on('guildMemberAdd', member => {
     "wants to have some fun!", "made the choose to join this peaceful place","We hope you brought some choccy milk", "  wants to join the vibe"]
   
     channel.send(`${member} ${randomjoin[Math.floor(Math.random() * randomjoin.length)]}`);
+    return;
+  }else if(member.guild.id === '836707588640997456'){
+    if(member.bot) return;
+
+    member.roles.add('847340620367265871')
+    return;
   }
 
 
